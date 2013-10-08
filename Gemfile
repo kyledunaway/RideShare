@@ -22,6 +22,10 @@ end
 
 gem 'jquery-rails'
 
+gem 'gmaps4rails'
+
+gem 'bcrypt-ruby', :require => "bcrypt"
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

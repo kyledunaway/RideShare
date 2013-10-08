@@ -1,0 +1,29 @@
+<h1>Listing trips</h1>
+
+<table>
+  <tr>
+    <th>Origin</th>
+    <th>Destination</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @trips.each do |trip| %>
+  <tr>
+    <td><%= trip.origin %></td>
+    <td><%= trip.destination %></td>
+    <td><%= link_to 'Show', trip %></td>
+    <% if current_user.id == trip.user.id %>
+    <td><%= link_to 'Edit', edit_trip_path(trip) %></td>
+    <td><%= link_to 'Destroy', trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Trip', new_trip_path %>
+
+<%= gmaps4rails(@json) %>
