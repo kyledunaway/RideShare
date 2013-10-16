@@ -1,28 +1,43 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Origin:</b>
-  <%= @trip.origin %>
+  <strong>Origin:</strong>
+  <%=h @trip.origin %>
+</p>
+<p>
+  <strong>Destination:</strong>
+  <%=h @trip.destination %>
 </p>
 
 <p>
-  <b>Destination:</b>
-  <%= @trip.destination %>
+  <strong>Driver:</strong>
+  <%= link_to @trip.user.username, user_path(@trip.user) %>
 </p>
 
 <p>
-  <b>Longitude:</b>
-  <%= @trip.longitude %>
+  <strong>Number of Seats:</strong>
+  <%= @trip.seat_number %>
 </p>
+
+<p><strong>Current Taken Seats:</strong></p>
+<ol>
+<% for seat in @trip.seats %>
+  <li>
+    <%=h seat.username %>
+  </li>
+<% end %>
+</ol>
 
 <p>
-  <b>Latitude:</b>
-  <%= @trip.latitude %>
+  <%= link_to "Apply for a Seat" , trips_apply_path %>
 </p>
-
 <p>
-  <b>Gmaps:</b>
-  <%= @trip.gmaps %>
+  <% if current_user.id == @trip.user.id %>
+  <%= link_to "Edit", edit_trip_path(@trip) %> |
+  <%= link_to "Destroy", @trip, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", trips_path %>
+  <% else %>
+  <%= link_to "View All", trips_path %>
+  <% end %>
 </p>
-
-<%= link_to 'Back', trips_path %>
+<%= gmaps(@gmaps_options) %>

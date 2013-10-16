@@ -11,16 +11,32 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131008230042) do
+ActiveRecord::Schema.define(:version => 20131016002106) do
+
+  create_table "markers", :force => true do |t|
+    t.integer  "trip_id"
+    t.string   "address"
+    t.float    "longitude"
+    t.float    "latitude"
+    t.boolean  "gmaps"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "seats", :force => true do |t|
+    t.integer  "trip_id"
+    t.integer  "user_id"
+    t.string   "username"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "trips", :force => true do |t|
     t.string   "origin"
     t.string   "destination"
-    t.float    "longitude"
-    t.float    "latitude"
-    t.boolean  "gmaps"
     t.integer  "user_id"
     t.integer  "username"
+    t.integer  "seat_number"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

@@ -1,6 +1,10 @@
-<h3 style="text-align:center">Welcome <%= current_user.username %></h3>
+<h5>Username : <%= @user.username %></h5>
+<h5>Currently The Driver of <%= @user.trips.count %> 
+	<% if @user.trips.count == 1 %>
+		Trip
+	<% else %>
+		Trips
+	<% end %>
+</h5>
 
-<br>
-<br>
-<h5>You Are Currently The Driver of _blank_ Number of Trips</h3>
-<h5>You Are Currently The Passenger of _blank_ Number of Trips</h3>
+<%= link_to "All Trips", trips_path %>

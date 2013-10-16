@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  trip_id: 1
+  address: MyString
+  longitude: 1.5
+  latitude: 1.5
+  gmaps: false
+
+two:
+  trip_id: 1
+  address: MyString
+  longitude: 1.5
+  latitude: 1.5
+  gmaps: false

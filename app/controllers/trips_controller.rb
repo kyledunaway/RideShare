@@ -3,7 +3,28 @@ class TripsController < ApplicationController
   # GET /trips.json
   def index
     @trips = Trip.all
-    @json = Trip.all.to_gmaps4rails
+    @markers = Array.new
+    @trips.each do |trip|
+      for marker in trip.markers
+        @markers.push(marker)
+      end
+    end
+
+    @gmaps_options =
+    {
+      "markers"     => { "data" => '[{ "lng": "-99.9018131", "lat": "31.9685988"},
+                                     { "lng": "-102.552784", "lat": "23.634501"},
+                                     { "lng": "-122.3667", "lat": "40.5833"},
+                                     { "lng": "-121.8356", "lat": "39.7400"}
+                                      ]', },
+      "polylines"   => { "data" => ' [ [
+                         {"lng": -99.9018131, "lat": 31.9685988},
+                         {"lng": -102.552784, "lat": 23.634501},
+                         ], [
+                          { "lng": "-122.3667", "lat": "40.5833"},
+                          { "lng": "-121.8356", "lat": "39.7400"}
+                          ] ]' }
+    }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +36,15 @@ class TripsController < ApplicationController
   # GET /trips/1.json
   def show
     @trip = Trip.find(params[:id])
+    @gmaps_options =
+    {
+      "markers"     => { "data" => '[{ "lng": "-99.9018131", "lat": "31.9685988"} ,{ "lng": "-102.552784", "lat": "23.634501"} ]', },
+      "polylines"   => { "data" => ' [ [
+                         {"lng": -99.9018131, "lat": 31.9685988},
+                         {"lng": -102.552784, "lat": 23.634501}
+                         ] ]' }
+    }
+
 
     respond_to do |format|
       format.html # show.html.erb
@@ -26,6 +56,8 @@ class TripsController < ApplicationController
   # GET /trips/new.json
   def new
     @trip = Trip.new
+    2.times {@trip.markers.build}
+
 
     respond_to do |format|
       format.html # new.html.erb
