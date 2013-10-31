@@ -3,28 +3,23 @@ class TripsController < ApplicationController
   # GET /trips.json
   def index
     @trips = Trip.all
-    @markers = Array.new
-    @trips.each do |trip|
-      for marker in trip.markers
-        @markers.push(marker)
-      end
-    end
+    @tripLocation = Trip.pluck(:id)
+    @markers = Marker.where("trip_id in (?)", @tripLocation)
+    @gmaps_options = @markers.to_gmaps4rails
 
-    @gmaps_options =
-    {
-      "markers"     => { "data" => '[{ "lng": "-99.9018131", "lat": "31.9685988"},
-                                     { "lng": "-102.552784", "lat": "23.634501"},
-                                     { "lng": "-122.3667", "lat": "40.5833"},
-                                     { "lng": "-121.8356", "lat": "39.7400"}
-                                      ]', },
-      "polylines"   => { "data" => ' [ [
-                         {"lng": -99.9018131, "lat": 31.9685988},
-                         {"lng": -102.552784, "lat": 23.634501},
-                         ], [
-                          { "lng": "-122.3667", "lat": "40.5833"},
-                          { "lng": "-121.8356", "lat": "39.7400"}
-                          ] ]' }
-    }
+    @polylines_json = {}
+    polylines = []
+
+    i = 0;
+    @trips.each do |trip|
+      polylines[i] = []
+      trip.markers.each do |marker|
+        polylines[i] += [{:lng=>marker.longitude.to_f, :lat=>marker.latitude.to_f}]
+      end
+      i+=1
+    end
+    
+    @polylines_json = polylines.to_json
 
     respond_to do |format|
       format.html # index.html.erb
@@ -36,15 +31,18 @@ class TripsController < ApplicationController
   # GET /trips/1.json
   def show
     @trip = Trip.find(params[:id])
-    @gmaps_options =
-    {
-      "markers"     => { "data" => '[{ "lng": "-99.9018131", "lat": "31.9685988"} ,{ "lng": "-102.552784", "lat": "23.634501"} ]', },
-      "polylines"   => { "data" => ' [ [
-                         {"lng": -99.9018131, "lat": 31.9685988},
-                         {"lng": -102.552784, "lat": 23.634501}
-                         ] ]' }
-    }
+    @markers = @trip.markers
+    @gmaps_options = @markers.to_gmaps4rails
 
+    @polylines_json = {}
+    polylines = [] 
+    polylines[0] = []
+      @trip.markers.each do |marker|
+        polylines[0] += [{:lng=>marker.longitude.to_f, :lat=>marker.latitude.to_f}]
+      end
+
+    
+    @polylines_json = polylines.to_json
 
     respond_to do |format|
       format.html # show.html.erb

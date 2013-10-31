@@ -40,4 +40,5 @@
   <%= link_to "View All", trips_path %>
   <% end %>
 </p>
-<%= gmaps(@gmaps_options) %>
+
+<%= gmaps("direction" => {data: { :from => @trip.origin, :to => @trip.destination}}) %>

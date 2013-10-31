@@ -36,4 +36,4 @@
 
 <%= link_to 'New Trip', new_trip_path %>
 
-<%= gmaps(@gmaps_options) %>
+<%= gmaps("markers" => {data: @gmaps_options}, "polylines" => { data: @polylines_json}) %>
