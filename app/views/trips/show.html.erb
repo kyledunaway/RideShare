@@ -29,7 +29,10 @@
 </ol>
 
 <p>
+  <% if current_user.id == @trip.user.id %>
+  <% else %>
   <%= link_to "Apply for a Seat" , trips_apply_path %>
+  <% end %>
 </p>
 <p>
   <% if current_user.id == @trip.user.id %>
@@ -42,3 +45,5 @@
 </p>
 
 <%= gmaps("direction" => {data: { :from => @trip.origin, :to => @trip.destination}}) %>
+
+<%= link_to "Directions For Trip", "https://maps.google.com/maps?saddr=" + @trip.origin.to_s + "&daddr=" + @trip.destination.to_s %>

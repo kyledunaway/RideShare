@@ -56,7 +56,6 @@ class TripsController < ApplicationController
     @trip = Trip.new
     2.times {@trip.markers.build}
 
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @trip }
