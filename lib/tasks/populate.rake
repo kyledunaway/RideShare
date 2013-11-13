@@ -3,7 +3,7 @@ begin
     desc "Populate the development database with some fake data"  
     task :populate => :environment do  
       for i in 0..10
-        User.create! :username => "user" + i.to_s, :password => "123"  
+        User.create! :username => "user" + i.to_s, :password => "123"
       end
     end  
   end  

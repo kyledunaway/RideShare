@@ -24,3 +24,5 @@ gem 'jquery-rails'
 gem 'gmaps4rails'
 gem 'prototype-rails'
 gem 'bcrypt-ruby', :require => "bcrypt"
+
+gem 'ajaxful_rating'
