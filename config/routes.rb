@@ -6,7 +6,11 @@ RideShare::Application.routes.draw do
 
   get "trips/apply"
 
-  resources :users
+  resources :users do
+  	member do
+  		post :rate
+  	end
+  end
   resources :sessions
   resources :trips
 

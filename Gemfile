@@ -25,4 +25,4 @@ gem 'gmaps4rails'
 gem 'prototype-rails'
 gem 'bcrypt-ruby', :require => "bcrypt"
 
-gem 'ajaxful_rating'
+gem 'ajaxful_rating', :git => 'git://github.com/edgarjs/ajaxful-rating.git', :branch => "rails3"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131016002106) do
+ActiveRecord::Schema.define(:version => 20131113034234) do
 
   create_table "markers", :force => true do |t|
     t.integer  "trip_id"
@@ -22,6 +22,19 @@ ActiveRecord::Schema.define(:version => 20131016002106) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "rates", :force => true do |t|
+    t.integer  "rater_id"
+    t.integer  "rateable_id"
+    t.string   "rateable_type"
+    t.integer  "stars",         :null => false
+    t.string   "dimension"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "rates", ["rateable_id", "rateable_type"], :name => "index_rates_on_rateable_id_and_rateable_type"
+  add_index "rates", ["rater_id"], :name => "index_rates_on_rater_id"
 
   create_table "seats", :force => true do |t|
     t.integer  "trip_id"

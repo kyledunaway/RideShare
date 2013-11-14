@@ -3,12 +3,14 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
   before_save :encrypt_password
-  
   has_many :trips
   validates_confirmation_of :password
   validates_presence_of :password, :on => :create
   validates_presence_of :username
   validates_uniqueness_of :username
+
+  ajaxful_rater
+  ajaxful_rateable :stars => 5
   
   def self.authenticate(username, password)
     user = find_by_username(username)
