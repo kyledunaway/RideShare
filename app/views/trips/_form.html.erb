@@ -19,17 +19,6 @@
     <%= f.label :destination %><br />
     <%= f.text_field :destination %>
   </p>
-
-      <%= f.fields_for :markers do |builder| %>
-      <p>
-      <%= builder.label :address, "Address" %><br />
-      <%= builder.text_field :address %>
-    </p>
-    <% end %>
-    <%= f.fields_for :seats do |builder| %>
-    <%= render 'seat_fields', :f =>builder %>
-    <% end %>
-    <p><%= link_to_add_fields "Add Seat", f, :seats %></p>
   <p>
     <%= f.label :seat_number, "Number of Seats"%><br />
     <%= f.select :seat_number, (1..10) %>

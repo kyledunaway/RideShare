@@ -10,13 +10,11 @@ class TripsController < ApplicationController
     @polylines_json = {}
     polylines = []
 
-    i = 0;
-    @trips.each do |trip|
+    @trips.each_with_index do |trip, i|
       polylines[i] = []
       trip.markers.each do |marker|
         polylines[i] += [{:lng=>marker.longitude.to_f, :lat=>marker.latitude.to_f}]
       end
-      i+=1
     end
     
     @polylines_json = polylines.to_json
@@ -25,6 +23,12 @@ class TripsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @trips }
     end
+  end
+
+  def apply_for
+    @trip = Trip.find(params[:id])
+    @trip.seats.create(:user_id => params[:user_id])
+    redirect_to trip_path(@path)
   end
 
   # GET /trips/1
@@ -54,7 +58,6 @@ class TripsController < ApplicationController
   # GET /trips/new.json
   def new
     @trip = Trip.new
-    2.times {@trip.markers.build}
 
     respond_to do |format|
       format.html # new.html.erb
@@ -111,4 +114,5 @@ class TripsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 end

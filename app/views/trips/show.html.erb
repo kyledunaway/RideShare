@@ -28,12 +28,10 @@
 <% end %>
 </ol>
 
-<p>
-  <% if current_user.id == @trip.user.id %>
-  <% else %>
-  <%= link_to "Apply for a Seat" , trips_apply_path %>
-  <% end %>
-</p>
+<% if current_user.id != @trip.user.id %>
+<%= link_to "Get on Trip", apply_for_trip_path(@trip, current_user.id, :method => :post) %>
+<% end %>
+
 <p>
   <% if current_user.id == @trip.user.id %>
   <%= link_to "Edit", edit_trip_path(@trip) %> |
