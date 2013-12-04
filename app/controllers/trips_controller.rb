@@ -27,8 +27,18 @@ class TripsController < ApplicationController
 
   def apply_for
     @trip = Trip.find(params[:id])
-    @trip.seats.create(:user_id => params[:user_id])
-    redirect_to trip_path(@path)
+    @trip.seats.create(:user_id => current_user.id, :pending => true, :accepted => false)
+    redirect_to trip_path(@trip)
+  end
+
+  def unapply_for
+    @trip = Trip.find(params[:id])
+    @trip.seats.each do |t|
+      if t.user_id == current_user.id
+        t.destroy
+      end
+    end
+    redirect_to trip_path(@trip)
   end
 
   # GET /trips/1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131114220834) do
+ActiveRecord::Schema.define(:version => 20131113034234) do
 
   create_table "markers", :force => true do |t|
     t.integer  "trip_id"
@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(:version => 20131114220834) do
     t.integer  "trip_id"
     t.integer  "user_id"
     t.string   "username"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
     t.boolean  "pending"
     t.boolean  "accepted"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "trips", :force => true do |t|

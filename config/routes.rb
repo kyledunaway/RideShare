@@ -12,7 +12,8 @@ RideShare::Application.routes.draw do
   resources :sessions
   resources :trips do
     member do
-      post :apply_for
+      put :apply_for
+      put :unapply_for
     end
   end
 

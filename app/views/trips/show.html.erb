@@ -21,21 +21,47 @@
 
 <p><strong>Current Taken Seats:</strong></p>
 <ol>
-<% for seat in @trip.seats %>
-  <li>
-    <%=h seat.username %>
-  </li>
+<% @trip.seats.each do |s| %>
+    <% if s.pending == false %>
+      <li>
+      <%= s.username %>
+      </li>
+    <% end %>
 <% end %>
 </ol>
 
-<% if current_user.id != @trip.user.id %>
-<%= link_to "Get on Trip", apply_for_trip_path(@trip, current_user.id, :method => :post) %>
+<p><strong>Current Pending Requests:</strong></p>
+<ol>
+<% @trip.seats.each do |s| %>
+    <% if s.pending == true %>
+      <li>
+      <% if current_user.id == @trip.user.id %>
+        <%= form_for ([@trip,s]) do |t| %>
+        <%= t.submit "Accept Passenger" %>
+          <% end %>
+      <% end %>
+      <%= s.username %>
+      </li>
+    <% end %>
+<% end %>
+</ol>
+
+<% if @trip.seats.map(&:user_id).include? current_user.id %>
+  <%= form_for @trip, :url => unapply_for_trip_path(@trip, current_user.id) do |f| %>
+  <%= f.submit "Unapply For Trip" %>
+  <% end %>
+<% else %>
+  <% if @trip.seats.count < @trip.seat_number %>
+    <%= form_for @trip, :url => apply_for_trip_path(@trip, current_user.id) do |f| %>
+    <%= f.submit "Apply For Trip" %>
+    <% end %>
+  <% end %>
 <% end %>
 
 <p>
   <% if current_user.id == @trip.user.id %>
   <%= link_to "Edit", edit_trip_path(@trip) %> |
-  <%= link_to "Destroy", @trip, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "Destroy", @trip, :confirm => 'Are You Sure?', :method => :delete %> |
   <%= link_to "View All", trips_path %>
   <% else %>
   <%= link_to "View All", trips_path %>

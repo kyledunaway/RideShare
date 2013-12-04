@@ -23,15 +23,17 @@
     <th><%= trip.destination %></th>
     <th><%= trip.seat_number %></th>
 
-    <td><%= link_to 'Show', trip %></td>
-    <td><%= link_to 'Edit', edit_trip_path(trip) %></td>
-    <td><%= link_to 'Destroy', trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <th><%= link_to 'Show', trip %></th>
+    <% if current_user.id == trip.user_id %>
+    <th>*</th>
+    <% end %>
+
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Trip', new_trip_path %>
+<p><%= link_to 'New Trip', new_trip_path %></p>
+<p>* Indicates You Are The Driver</p>
 
 <%= gmaps("markers" => {data: @gmaps_options}, "polylines" => { data: @polylines_json}) %>
