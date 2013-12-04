@@ -18,11 +18,15 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem 'twitter-bootstrap-rails'
 end
 
 gem 'jquery-rails'
 gem 'gmaps4rails'
 gem 'prototype-rails'
 gem 'bcrypt-ruby', :require => "bcrypt"
+
+gem 'therubyracer'
+gem 'less-rails'
 
 gem 'ajaxful_rating', :git => 'git://github.com/edgarjs/ajaxful-rating.git', :branch => "rails3"

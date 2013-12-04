@@ -1,8 +1,9 @@
 class TripsController < ApplicationController
+  helper_method :sort_column, :sort_direction
   # GET /trips
   # GET /trips.json
   def index
-    @trips = Trip.all
+    @trips = Trip.order(params[:sort].to_s + " " + params[:direction].to_s)
     @tripLocation = Trip.pluck(:id)
     @markers = Marker.where("trip_id in (?)", @tripLocation)
     @gmaps_options = @markers.to_gmaps4rails
@@ -123,6 +124,14 @@ class TripsController < ApplicationController
       format.html { redirect_to trips_url }
       format.json { head :no_content }
     end
+  end
+
+  def sort_column
+    Trip.column_names.include?(params[:sort]) ? params[:sort] : "origin"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end

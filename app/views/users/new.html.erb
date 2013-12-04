@@ -1,5 +1,7 @@
+<center>
 <h1>Sign Up</h1>
 
+<br>
 <%= form_for @user do |f| %>
   <% if @user.errors.any? %>
     <div class="error_messages">
@@ -25,3 +27,4 @@
   </p>
   <p class="button"><%= f.submit %></p>
 <% end %>
+</center>

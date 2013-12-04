@@ -11,3 +11,36 @@
  *= require_self
  *= require_tree .
  */
+.trip_list th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.wrapper-wrapper {
+    overflow-y: auto;
+    height: 700px;
+}
+
+.wrapper-wrapper::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.wrapper-wrapper::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+.wrapper-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+
+
+.asc { background-image: url(up_arrow.gif); }
+.desc { background-image: url(down_arrow.gif); }
+
+
+body { 
+    padding-top: 65px; 
+}

@@ -1,39 +1,35 @@
-<h5>You Are Currently The Driver of <%= current_user.trips.count %> 
-  <% if current_user.trips.count == 1 %>
-    Trip
-  <% else %>
-    Trips
-  <% end %>
-</h5>
-
+<center>
 <h1>All Trips</h1>
+<h6>To Sort The List, Click on Origin, Destination, or Number of Seats</h6>
+<h6>* Indicates You Are The Driver Of Trip</h6>
+<h3><%= link_to 'Create Your Own Trip', new_trip_path %></h3>
+</center>
 
-<table>
-  <tr>
-    <th>Origin</th>
-    <th>Destination</th>
-    <th>Number of Seats</th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @trips.each do |trip| %>
-  <tr>
-    <th><%= trip.origin %></th>
-    <th><%= trip.destination %></th>
-    <th><%= trip.seat_number %></th>
+<div class="row">
+  <div class="span5 wrapper-wrapper">
+    <table class="trip_list">
+      <tr>
+        <th><%= sortable "origin" %></th>
+        <th><%= sortable "destination" %></th>
+        <th><%= sortable "number_of_seats", "Number of Seats" %></th>
+      </tr>
 
-    <th><%= link_to 'Show', trip %></th>
-    <% if current_user.id == trip.user_id %>
-    <th>*</th>
+    <% @trips.each do |trip| %>
+      <tr>
+        <th><%= trip.origin %></th>
+        <th><%= trip.destination %></th>
+        <th><%= trip.seat_number %></th>
+        <th><%= link_to 'Show', trip %></th>
+        <% if current_user.id == trip.user_id %>
+        <th>*</th>
+        <% end %>
+      </tr>
     <% end %>
+    </table>
+  </div>
 
-  </tr>
-<% end %>
-</table>
-
-<br />
-<p><%= link_to 'New Trip', new_trip_path %></p>
-<p>* Indicates You Are The Driver</p>
-
-<%= gmaps("markers" => {data: @gmaps_options}, "polylines" => { data: @polylines_json}) %>
+  <div class="span12">
+    <%= gmaps("markers" => {data: @gmaps_options}, "polylines" => { data: @polylines_json}) %>
+  </div>
+</div>
