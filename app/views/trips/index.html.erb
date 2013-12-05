@@ -3,11 +3,18 @@
 <h6>To Sort The List, Click on Origin, Destination, or Number of Seats</h6>
 <h6>* Indicates You Are The Driver Of Trip</h6>
 <h3><%= link_to 'Create Your Own Trip', new_trip_path %></h3>
+<%= form_tag trips_path, :method => :get do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
 </center>
 
 
 <div class="row">
   <div class="span5 wrapper-wrapper">
+
     <table class="trip_list">
       <tr>
         <th><%= sortable "origin" %></th>
@@ -28,6 +35,8 @@
     <% end %>
     </table>
   </div>
+
+
 
   <div class="span12">
     <%= gmaps("markers" => {data: @gmaps_options}, "polylines" => { data: @polylines_json}) %>

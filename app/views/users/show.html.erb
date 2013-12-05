@@ -1,11 +1,18 @@
-<h5>Username : <%= @user.username %></h5>
-<h5>Currently The Driver of <%= @user.trips.count %> 
+<center>
+<h1>Hello: <%= @user.username %></h1>
+<h2>You Are Currently The Driver of <%= @user.trips.count %> 
 	<% if @user.trips.count == 1 %>
 		Trip
 	<% else %>
 		Trips
 	<% end %>
-</h5>
+</h2>
+
+<% @user.trips.each do |t| %>
+	<%= link_to t.destination %>
+<% end %>
+
+</center>
 
 <%= ratings_for @user, :show_user_rating => true %>
 <%= ratings_for @user, :static %>

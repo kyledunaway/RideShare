@@ -29,4 +29,6 @@ gem 'bcrypt-ruby', :require => "bcrypt"
 gem 'therubyracer'
 gem 'less-rails'
 
+gem 'geocoder'
+
 gem 'ajaxful_rating', :git => 'git://github.com/edgarjs/ajaxful-rating.git', :branch => "rails3"
