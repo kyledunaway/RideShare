@@ -1,16 +1,10 @@
+<center>
 <h1>Sign Up</h1>
 
 <br>
 <%= form_for @user do |f| %>
   <% if @user.errors.any? %>
-    <div class="error_messages">
-      <h2>Form is invalid</h2>
-      <ul>
-        <% for message in @user.errors.full_messages %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <%= flash[:error] = @user.errors.full_messages.to_sentence %>
   <% end %>
   <p>
     <%= f.label :username %><br />
@@ -24,5 +18,7 @@
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation %>
   </p>
-  <p class="button"><%= f.submit %></p>
+  <button type="submit" class="btn">Create User</button>
+
 <% end %>
+</center>

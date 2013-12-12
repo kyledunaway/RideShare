@@ -1,20 +1,18 @@
 <center>
 <h1>All Trips</h1>
-<h6>To Sort The List, Click on Origin, Destination, or Number of Seats</h6>
-<h6>* Indicates You Are The Driver Of Trip</h6>
-<h3><%= link_to 'Create Your Own Trip', new_trip_path %></h3>
-<%= form_tag trips_path, :method => :get do %>
-  <p>
-    <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "Search", :name => nil %>
-  </p>
-<% end %>
+
 </center>
+
+    <center>
+    <h6>To Sort The List Click on Origin, Destination, or Number of Seats</h6>
+    <h6>* Indicates You Are The Driver Of The Trip</h6>
+    <h3><%= link_to "Create A New Trip", new_trip_path %></h3>
+    </center>
 
 
 <div class="row">
-  <div class="span5 wrapper-wrapper">
-
+  <div class="span5 offset1 wrapper-wrapper">
+  
     <table class="trip_list">
       <tr>
         <th><%= sortable "origin" %></th>
@@ -36,9 +34,21 @@
     </table>
   </div>
 
-
-
-  <div class="span12">
+  <div class="span8 wrapper-mapwrapper">
     <%= gmaps("markers" => {data: @gmaps_options}, "polylines" => { data: @polylines_json}) %>
   </div>
 </div>
+
+<% content_for :scripts do %>
+<script type="text/javascript">
+function redirect_to(url) {
+  window.location = url;
+};
+Gmaps4Rails.callback = function() { 
+  function say_yo(arg) { return function(){alert('yo '+ arg + '!' );};};
+    for (var i = 0; i <  Gmaps4Rails.markers.length; ++i) {
+      google.maps.event.addListener(Gmaps4Rails.markers[i].google_object, 'click', redirect_to(Gmaps4Rails.markers[i].link));
+    }
+}
+</script>
+<% end %>

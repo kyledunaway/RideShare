@@ -32,6 +32,11 @@ class TripsController < ApplicationController
     redirect_to trip_path(@trip)
   end
 
+  def accept_for
+    @trip = Trip.find(params[:id])
+    redirect_to trip_path(@trip)
+  end
+
   def unapply_for
     @trip = Trip.find(params[:id])
     @trip.seats.each do |t|
@@ -93,7 +98,6 @@ class TripsController < ApplicationController
         format.json { render json: @trip, status: :created, location: @trip }
       else
         format.html { render action: "new" }
-        format.json { render json: @trip.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -109,7 +113,6 @@ class TripsController < ApplicationController
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @trip.errors, status: :unprocessable_entity }
       end
     end
   end

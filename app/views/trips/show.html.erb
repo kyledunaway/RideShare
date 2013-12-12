@@ -1,73 +1,73 @@
-<p id="notice"><%= notice %></p>
+<center>
+<h1><%= @trip.origin %> To <%= @trip.destination %></h1>
+<h1>Driver: <%= link_to @trip.user.username, user_path(@trip.user) %></h1>
+</center>
 
-<p>
-  <strong>Origin:</strong>
-  <%=h @trip.origin %>
-</p>
-<p>
-  <strong>Destination:</strong>
-  <%=h @trip.destination %>
-</p>
+<div class="row">
+  <div class="span4 offset1">
+    <h4>Leaving On: <%= @trip.start_date %></h4>
 
-<p>
-  <strong>Driver:</strong>
-  <%= link_to @trip.user.username, user_path(@trip.user) %>
-</p>
+    <h4>Number of Seats:  <%= @trip.seat_number %></h4>
+    <h4>Price Per Seat:  $<%= @trip.price %></h4>
 
-<p>
-  <strong>Number of Seats:</strong>
-  <%= @trip.seat_number %>
-</p>
 
-<p><strong>Current Taken Seats:</strong></p>
-<ol>
-<% @trip.seats.each do |s| %>
-    <% if s.pending == false %>
-      <li>
-      <%= s.username %>
-      </li>
-    <% end %>
-<% end %>
-</ol>
-
-<p><strong>Current Pending Requests:</strong></p>
-<ol>
-<% @trip.seats.each do |s| %>
-    <% if s.pending == true %>
-      <li>
-      <% if current_user.id == @trip.user.id %>
-        <%= form_for ([@trip,s]) do |t| %>
-        <%= t.submit "Accept Passenger" %>
+    <h4>Current Taken Seats:</h4>
+      <ol>
+        <% @trip.seats.each do |s| %>
+          <% if s.accepted == true %>
+            <li>
+              <%= s.username %>
+            </li>
           <% end %>
+        <% end %>
+      </ol>
+
+    <h4>Current Pending Requests:</h4>
+      <ol>
+        <% @trip.seats.each do |s| %>
+          <% if s.pending == true %>
+            <li>
+              <%= s.username %>
+                <% if current_user.id == @trip.user.id %>
+                  PASS THE SEAT USER_ID TO ACCEPT TRIP, AND CHANGE PENDING TO ACCEPTED
+                  <%= form_for @trip, :url => accept_for_trip_path(@trip, s.user_id) do |f| %>
+                  <button type="submit" class="btn">Accept User</button>
+                  <% end %>
+                <% end %>
+            </li>
+          <% end %>
+        <% end %>
+      </ol>
+
+      <% if @trip.seats.map(&:user_id).include? current_user.id %>
+        <%= form_for @trip, :url => unapply_for_trip_path(@trip, current_user.id) do |f| %>
+        <button type="submit" class="btn">Unapply From Trip</button>
+        <% end %>
+      <% else %>
+        <% if @trip.seats.count < @trip.seat_number %>
+          <%= form_for @trip, :url => apply_for_trip_path(@trip, current_user.id) do |f| %>
+          <button type="submit" class="btn">Apply For Trip</button>
+          <% end %>
+        <% end %>
       <% end %>
-      <%= s.username %>
-      </li>
-    <% end %>
-<% end %>
-</ol>
 
-<% if @trip.seats.map(&:user_id).include? current_user.id %>
-  <%= form_for @trip, :url => unapply_for_trip_path(@trip, current_user.id) do |f| %>
-  <%= f.submit "Unapply For Trip" %>
-  <% end %>
-<% else %>
-  <% if @trip.seats.count < @trip.seat_number %>
-    <%= form_for @trip, :url => apply_for_trip_path(@trip, current_user.id) do |f| %>
-    <%= f.submit "Apply For Trip" %>
-    <% end %>
-  <% end %>
-<% end %>
+      <% if current_user.id == @trip.user.id %>
+        <h4><%= link_to "Edit Trip", edit_trip_path(@trip) %></h4>
+        <h4><%= link_to "Delete Trip", @trip, :confirm => 'Are You Sure?', :method => :delete %></h4>
+        <h4><%= link_to "Back To View All Trips", trips_path %></h4>
+      <% else %>
+        <h4><%= link_to "Bacl To View All Trips", trips_path %></h4>
+      <% end %>
 
-<p>
-  <% if current_user.id == @trip.user.id %>
-  <%= link_to "Edit", edit_trip_path(@trip) %> |
-  <%= link_to "Destroy", @trip, :confirm => 'Are You Sure?', :method => :delete %> |
-  <%= link_to "View All", trips_path %>
-  <% else %>
-  <%= link_to "View All", trips_path %>
-  <% end %>
-</p>
+      <h4><%= link_to "Google Maps Directions For Trip", "https://maps.google.com/maps?saddr=" + @trip.origin.to_s + "&daddr=" + @trip.destination.to_s %></h4>
+  </div>
 
-<%= gmaps("direction" => {data: { :from => @trip.origin, :to => @trip.destination}}) %>
 
-<%= link_to "Directions For Trip", "https://maps.google.com/maps?saddr=" + @trip.origin.to_s + "&daddr=" + @trip.destination.to_s %>
+  <div class="span9 wrapper-mapwrapper">
+    <%= gmaps("direction" => {data: { :from => @trip.origin, :to => @trip.destination}}) %>
+  </div>
+</div>
+
+
+
+

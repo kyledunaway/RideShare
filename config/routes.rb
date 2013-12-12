@@ -14,6 +14,7 @@ RideShare::Application.routes.draw do
     member do
       put :apply_for
       put :unapply_for
+      put :accept_for
     end
   end
 

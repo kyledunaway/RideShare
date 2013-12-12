@@ -1,23 +1,74 @@
-<center>
-<h1>Hello: <%= @user.username %></h1>
-<h2>You Are Currently The Driver of <%= @user.trips.count %> 
-	<% if @user.trips.count == 1 %>
-		Trip
-	<% else %>
-		Trips
-	<% end %>
-</h2>
+<div class="row">
+	<div class="span2 offset2">
+		<%= image_tag("/carpool.jpg") %>
+	</div>
+	<div class="span7">
+		<center>
+		<% if current_user.id == @user.id %>
+			<h1>Hello: <%= @user.username %></h1>
+			<h2>You Are Currently The Driver of <%= @user.trips.count %> 
+				<% if @user.trips.count == 1 %>
+					Trip
+				<% else %>
+					Trips
+				<% end %>
+			</h2>
+			<h4>If A Trip Has A Pending Seat, Check It!</h4>
+		<% else %>
+			<h1>Welcome To : <%= @user.username %>'s Homepage</h1>
+			<h3>Below Are A List Of Trips He/She Is Currently Apart Of</h3>
 
-<% @user.trips.each do |t| %>
-	<%= link_to t.destination %>
-<% end %>
 
-</center>
+		<% end %>
 
-<%= ratings_for @user, :show_user_rating => true %>
-<%= ratings_for @user, :static %>
-
-
-<p>
-<%= link_to "All Trips", trips_path %>
-</p>
+		</center>
+	</div>
+</div>
+<br></br>
+<div class="row">
+	<div class="span10 offset1">
+		<table class = "table">
+			<thead>
+				<tr>
+					<th>Origin</th>
+					<th>Destination</th>
+					<th>Number Of Seats</th>
+					<th>Pending Seats</th>
+					<th>Accepted Seats</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @user.trips.each do |t| %>
+  					<tr>
+						<th><%= link_to t.origin, t %></th>
+						<th><%= link_to t.destination, t %></th>
+						<th><%= t.seat_number %></th>
+						<th><%= t.seat_pending_count %></th>
+						<th><%= t.seat_accepted_count %></th>
+  					</tr>
+  				<% end %>
+  				<th></th>
+  				<th></th>
+  				<th></th>
+  				<th></th>
+  				<th></th>
+			</tbody>
+		</table>
+	</div>
+	<div class="span2 offset1">
+		<% if current_user.id == @user.id %>
+			<h4>Overall Rating</h4>
+			<%= ratings_for @user, :static %>
+			<br></br>
+		<% else %>
+			<h4>Rate Me!</h4>
+			<%= ratings_for @user, :show_user_rating => true %>
+			<h4>Overall Rating</h4>
+			<%= ratings_for @user, :static %>
+			<br></br>
+		<% end %>
+		<p>
+			<h4><%= link_to "View All Trips", trips_path %></h4>
+		</p>
+	</div>
+</div>

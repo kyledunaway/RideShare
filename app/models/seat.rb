@@ -10,4 +10,5 @@ class Seat < ActiveRecord::Base
   	self.pending = false
   	self.accepted = true
   end
+
 end

@@ -7,6 +7,8 @@ class CreateTrips < ActiveRecord::Migration
       t.integer :user_id
       t.integer :username
       t.integer :seat_number
+      t.integer :price
+      t.date    :start_date
 
       t.timestamps
     end

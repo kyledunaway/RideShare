@@ -1,14 +1,6 @@
 <%= form_for(@trip) do |f| %>
   <% if @trip.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@trip.errors.count, "error") %> prohibited this trip from being saved:</h2>
-
-      <ul>
-      <% @trip.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+      <%= flash[:error] = @trip.errors.full_messages.to_sentence %>
   <% end %>
 
   <p>
@@ -23,6 +15,15 @@
     <%= f.label :seat_number, "Number of Seats"%><br />
     <%= f.select :seat_number, (1..10) %>
   </p>
+  <p>
+    <%= f.label :price, "Price Per Seat"%><br />
+    <%= f.number_field :price %>
+  </p>
+  <p>
+    <%= f.label :start_date, "Leaving On"%><br />
+    <%= f.date_select :start_date, :order => [:month, :day, :year] %>
+  </p>
+
   <p>
     <button type="submit" class="btn">Submit</button>
   </p>
