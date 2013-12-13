@@ -32,11 +32,6 @@ class TripsController < ApplicationController
     redirect_to trip_path(@trip)
   end
 
-  def accept_for
-    @trip = Trip.find(params[:id])
-    redirect_to trip_path(@trip)
-  end
-
   def unapply_for
     @trip = Trip.find(params[:id])
     @trip.seats.each do |t|

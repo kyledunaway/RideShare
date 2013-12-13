@@ -17,6 +17,11 @@
           <% if s.accepted == true %>
             <li>
               <%= s.username %>
+              <% if current_user.id == @trip.user.id %>
+                  <%= form_for @trip, :url => trip_user_unaccept_for_path(@trip, s.user_id) do |f| %>
+                  <button type="submit" class="btn">Unaccept User</button>
+                  <% end %>
+                <% end %>
             </li>
           <% end %>
         <% end %>
@@ -29,8 +34,7 @@
             <li>
               <%= s.username %>
                 <% if current_user.id == @trip.user.id %>
-                  PASS THE SEAT USER_ID TO ACCEPT TRIP, AND CHANGE PENDING TO ACCEPTED
-                  <%= form_for @trip, :url => accept_for_trip_path(@trip, s.user_id) do |f| %>
+                  <%= form_for @trip, :url => trip_user_accept_for_path(@trip, s.user_id) do |f| %>
                   <button type="submit" class="btn">Accept User</button>
                   <% end %>
                 <% end %>
@@ -56,7 +60,7 @@
         <h4><%= link_to "Delete Trip", @trip, :confirm => 'Are You Sure?', :method => :delete %></h4>
         <h4><%= link_to "Back To View All Trips", trips_path %></h4>
       <% else %>
-        <h4><%= link_to "Bacl To View All Trips", trips_path %></h4>
+        <h4><%= link_to "Back To View All Trips", trips_path %></h4>
       <% end %>
 
       <h4><%= link_to "Google Maps Directions For Trip", "https://maps.google.com/maps?saddr=" + @trip.origin.to_s + "&daddr=" + @trip.destination.to_s %></h4>

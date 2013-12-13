@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 	def create
   		@user = User.new(params[:user])
   		if @user.save
-    		redirect_to user_path(@user), :notice => "Signed up!"
+    		redirect_to root(@user), :notice => "Signed up!, Now Log In!"
   		else
     		render "new"
   		end
@@ -37,5 +37,23 @@ class UsersController < ApplicationController
       user.replace_html @user.wrapper_dom_id(params), ratings_for(@user, params.merge(:wrap => false))
       user.visual_effect :highlight, @user.wrapper_dom_id(params)
     end
+  end
+
+  def accept_for
+    @trip = Trip.find(params[:trip_id])
+    @seat = @trip.seats.where(:user_id => params[:user_id]).first
+    @seat.pending = false
+    @seat.accepted = true
+    @seat.save
+    redirect_to trip_path(@trip)
+  end
+
+  def unaccept_for
+    @trip = Trip.find(params[:trip_id])
+    @seat = @trip.seats.where(:user_id => params[:user_id]).first
+    @seat.pending = true
+    @seat.accepted = false
+    @seat.save
+    redirect_to trip_path(@trip)
   end
 end

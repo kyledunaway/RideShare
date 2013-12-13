@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="span2 offset2">
-		<%= image_tag("/carpool.jpg") %>
+		<%= link_to image_tag("/carpool.jpg"), user_path(current_user) %>
 	</div>
 	<div class="span7">
 		<center>
@@ -17,8 +17,6 @@
 		<% else %>
 			<h1>Welcome To : <%= @user.username %>'s Homepage</h1>
 			<h3>Below Are A List Of Trips He/She Is Currently Apart Of</h3>
-
-
 		<% end %>
 
 		</center>
@@ -54,6 +52,7 @@
   				<th></th>
 			</tbody>
 		</table>
+
 	</div>
 	<div class="span2 offset1">
 		<% if current_user.id == @user.id %>
