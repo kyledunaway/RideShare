@@ -55,6 +55,10 @@
         <% end %>
       <% end %>
 
+
+        <h4>Comments: </h4>
+          <i><%= @trip.comments %></i>
+
       <% if current_user.id == @trip.user.id %>
         <h4><%= link_to "Edit Trip", edit_trip_path(@trip) %></h4>
         <h4><%= link_to "Delete Trip", @trip, :confirm => 'Are You Sure?', :method => :delete %></h4>

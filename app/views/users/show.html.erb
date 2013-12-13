@@ -25,6 +25,7 @@
 <br></br>
 <div class="row">
 	<div class="span10 offset1">
+		<h2>Driver Trips</h2>
 		<table class = "table">
 			<thead>
 				<tr>
@@ -52,7 +53,6 @@
   				<th></th>
 			</tbody>
 		</table>
-
 	</div>
 	<div class="span2 offset1">
 		<% if current_user.id == @user.id %>
@@ -70,4 +70,39 @@
 			<h4><%= link_to "View All Trips", trips_path %></h4>
 		</p>
 	</div>
+</div>
+
+
+<div class="row">
+	<div class="span10 offset1">
+		<h2>Passenger Trips</h2>
+		<table class = "table">
+			<thead>
+				<tr>
+					<th>Origin</th>
+					<th>Destination</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @apart_of.each do |t| %>
+				<tr>
+					<th><%= link_to t.origin, t %></th>
+					<th><%= link_to t.destination, t %></th>
+
+				<% t.seats.each do |s| %>
+					<% if s.pending == true %>
+						<th>pending</th>
+					<% else %>
+						<th>accepted</th>
+					<% end %>
+				<% end %>
+				</tr>
+
+  				<% end %>
+  				<th></th>
+  				<th></th>
+  				<th></th>
+			</tbody>
+		</table>
 </div>

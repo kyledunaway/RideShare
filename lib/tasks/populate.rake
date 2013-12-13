@@ -53,7 +53,9 @@ begin
     desc "Populate the development database with some fake data"  
     task :populate => :environment do  
       for i in 0..20
-        Trip.create! :origin => @states[rand(0..47)].to_s, :destination => @states[rand(0..47)].to_s, :user_id => rand(0..10), :seat_number => rand(1..5), :price => rand(0..100), :start_date => rand(10.years).ago
+        Trip.create! :origin => @states[rand(0..47)].to_s, :destination => @states[rand(0..47)].to_s,
+         :user_id => rand(0..10), :seat_number => rand(1..5), :price => rand(0..100), 
+         :start_date => rand(10.years).ago, :comments => "This is where a phone number, time leaving, etc would go."
       end
 
       for i in 0..10

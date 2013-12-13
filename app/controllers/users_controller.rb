@@ -14,6 +14,8 @@ class UsersController < ApplicationController
 
   def show
       @user = User.find(params[:id])
+      seats = Seat.where(:user_id => params[:id])
+      @apart_of = seats.map{ |s| s.trip }
   end
 
   def edit

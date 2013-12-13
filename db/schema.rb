@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20131113034234) do
     t.integer  "seat_number"
     t.integer  "price"
     t.date     "start_date"
+    t.text     "comments"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

@@ -11,4 +11,11 @@ class Seat < ActiveRecord::Base
   	self.accepted = true
   end
 
+  def user
+  	User.find(:user_id => self.user_id)
+  end
+
+  def status
+    return self.pending
+  end
 end

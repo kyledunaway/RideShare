@@ -1,5 +1,5 @@
 class Trip < ActiveRecord::Base
-  attr_accessible :destination, :origin, :user_id, :username, :markers_attributes, :seat_number, :price, :start_date
+  attr_accessible :destination, :origin, :user_id, :username, :markers_attributes, :seat_number, :price, :start_date, :comments
 
   belongs_to :user
 
